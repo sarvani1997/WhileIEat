@@ -117,6 +117,7 @@ function Filters({ close, filters, setFilters }) {
 export default function DiscoverMovies() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
+  const [pages, setPages] = useState();
   const [filters, setFilters] = useState({
     language: '',
     genre: '',
@@ -143,12 +144,25 @@ export default function DiscoverMovies() {
           },
         });
         setMovies(response.data.results);
+        setPages(response.data.total_pages);
       } catch (error) {
         console.error(error);
       }
     }
     get();
   }, [page, filters]);
+
+  const onNextPage = async () => {
+    if (page < pages) {
+      setPage(page + 1);
+    }
+  };
+
+  const onPrevPage = async () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
 
   return (
     <div className="container mt-5">
@@ -163,7 +177,7 @@ export default function DiscoverMovies() {
         <Filters close={close} filters={filters} setFilters={setFilters} />
       </Dialog>
 
-      <div className="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+      <div className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
         {movies.map((movie, i) => {
           return (
             <div key={i} className="col">
@@ -178,6 +192,22 @@ export default function DiscoverMovies() {
             </div>
           );
         })}
+      </div>
+      <div className="d-flex justify-content-between mb-5 mt-5">
+        <button
+          onClick={onPrevPage}
+          className="btn btn-outline-secondary btn-sm"
+        >
+          <i className="bi bi-arrow-left"></i>
+        </button>
+        <span>Page: {page}</span>
+        <button
+          onClick={onNextPage}
+          className="btn btn-outline-secondary btn-sm "
+          type="button"
+        >
+          <i className="bi bi-arrow-right"></i>
+        </button>
       </div>
     </div>
   );
