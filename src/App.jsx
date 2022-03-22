@@ -7,7 +7,7 @@ import './App.css';
 const BASE_URL = import.meta.env.VITE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-function Filters({ close, filters, setFilters }) {
+function Filters({ close, filters, setFilters, setPage }) {
   const [laguages, setLanguages] = useState([]);
   const [genres, setGenres] = useState([]);
   const [watchProviders, setWatchProviders] = useState([]);
@@ -118,14 +118,22 @@ export default function DiscoverMovies() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState();
+  const [searchPages, setSearchPages] = useState();
+  const [searchPage, setSearchPage] = useState(1);
+  const [search, setSearch] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const [filters, setFilters] = useState({
     language: '',
     genre: '',
     watchProvider: '',
   });
   const [showDialog, setShowDialog] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
-  const open = () => setShowDialog(true);
+  const open = () => {
+    setShowDialog(true);
+    setPage(1);
+  };
   const close = () => setShowDialog(false);
 
   useEffect(async () => {
@@ -152,30 +160,112 @@ export default function DiscoverMovies() {
     get();
   }, [page, filters]);
 
+  useEffect(async () => {
+    async function get() {
+      try {
+        const response = await axios.get(`${BASE_URL}/search/movie`, {
+          params: {
+            api_key: API_KEY,
+            query: searchValue,
+            page: searchPage,
+          },
+        });
+        setSearchResults(response.data.results);
+        setSearchPages(response.data.total_pages);
+        if (search == true) {
+          setMovies(response.data.results);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    get();
+  }, [searchPage, searchValue]);
+
   const onNextPage = async () => {
-    if (page < pages) {
-      setPage(page + 1);
+    window.scrollTo(0, 0);
+    if (search == false) {
+      if (page < pages) {
+        setPage(page + 1);
+      }
+    } else {
+      if (searchPage < searchPages) {
+        setSearchPage(searchPage + 1);
+      }
     }
   };
 
   const onPrevPage = async () => {
-    if (page > 1) {
-      setPage(page - 1);
+    window.scrollTo(0, 0);
+    if (search === false) {
+      if (page > 1) {
+        setPage(page - 1);
+      }
+    } else {
+      if (searchPage < 1) {
+        setSearchPage(searchPage - 1);
+      }
     }
+  };
+
+  const onSearch = (e) => {
+    e.preventDefault();
+    setSearch(true);
+    setMovies(searchResults);
+  };
+
+  const reset = () => {
+    setFilters({ language: '', genre: '', watchProvider: '' });
+    setPage(1);
+    setSearch(false);
+    setSearchPage(1);
   };
 
   return (
     <div className="container mt-5">
-      <div className="mb-3">
-        <input type="text" className="form-control" placeholder="Search" />
-      </div>
-      <button type="button" className="btn btn-secondary mb-3" onClick={open}>
+      <form className="row g-3" onSubmit={onSearch}>
+        <div className="col">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+        </div>
+        <div className="col-auto">
+          <button type="submit" className="btn btn-primary mb-3">
+            Search
+          </button>
+        </div>
+      </form>
+      <button type="button" className="btn btn-secondary m-3" onClick={open}>
         + Add Filters
+      </button>
+      <button type="button" className="btn btn-secondary m-3" onClick={reset}>
+        RESET
       </button>
 
       <Dialog aria-label="dialog" isOpen={showDialog} onDismiss={close}>
         <Filters close={close} filters={filters} setFilters={setFilters} />
       </Dialog>
+
+      <div className="d-flex justify-content-between mb-5 mt-5">
+        <button
+          onClick={onPrevPage}
+          className="btn btn-outline-secondary btn-sm"
+        >
+          <i className="bi bi-arrow-left"></i>
+        </button>
+        <span>Page: {search === false ? page : searchPage}</span>
+        <button
+          onClick={onNextPage}
+          className="btn btn-outline-secondary btn-sm "
+          type="button"
+        >
+          <i className="bi bi-arrow-right"></i>
+        </button>
+      </div>
 
       <div className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
         {movies.map((movie, i) => {
@@ -183,11 +273,11 @@ export default function DiscoverMovies() {
             <div key={i} className="col">
               <button className="thumbnail">
                 <img
-                  src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
+                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                   className="img-thumbnail"
                   alt="..."
                 />
-                <p>{movie.title}</p>
+                <h5>{movie.title}</h5>
               </button>
             </div>
           );
@@ -200,7 +290,7 @@ export default function DiscoverMovies() {
         >
           <i className="bi bi-arrow-left"></i>
         </button>
-        <span>Page: {page}</span>
+        <span>Page: {search === false ? page : searchPage}</span>
         <button
           onClick={onNextPage}
           className="btn btn-outline-secondary btn-sm "

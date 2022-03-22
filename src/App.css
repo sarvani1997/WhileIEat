@@ -1,5 +1,6 @@
 .thumbnail {
-  width: 250px;
-  height: 350px;
+  width: 300px;
+  height: 480px;
   border: none;
+  padding: 10px;
 }
