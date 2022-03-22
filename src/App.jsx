@@ -10,7 +10,8 @@ const BASE_URL = import.meta.env.VITE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function DiscoverMovies() {
-  const [movies, setMovies] = useState([]);
+  const [select, setSelect] = useState('tv');
+  const [lists, setLists] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState();
   const [searchPages, setSearchPages] = useState();
@@ -28,7 +29,7 @@ export default function DiscoverMovies() {
   useEffect(async () => {
     async function get() {
       try {
-        const response = await axios.get(`${BASE_URL}/discover/movie`, {
+        const response = await axios.get(`${BASE_URL}/discover/${select}`, {
           params: {
             api_key: API_KEY,
             page: page,
@@ -40,19 +41,19 @@ export default function DiscoverMovies() {
             with_watch_monetization_types: 'flatrate',
           },
         });
-        setMovies(response.data.results);
+        setLists(response.data.results);
         setPages(response.data.total_pages);
       } catch (error) {
         console.error(error);
       }
     }
     get();
-  }, [page, filters]);
+  }, [page, filters, select]);
 
   useEffect(async () => {
     async function get() {
       try {
-        const response = await axios.get(`${BASE_URL}/search/movie`, {
+        const response = await axios.get(`${BASE_URL}/search/${select}`, {
           params: {
             api_key: API_KEY,
             query: searchValue,
@@ -62,14 +63,14 @@ export default function DiscoverMovies() {
         setSearchResults(response.data.results);
         setSearchPages(response.data.total_pages);
         if (search == true) {
-          setMovies(response.data.results);
+          setLists(response.data.results);
         }
       } catch (error) {
         console.error(error);
       }
     }
     get();
-  }, [searchPage, searchValue]);
+  }, [searchPage, searchValue, select]);
 
   const open = () => {
     setShowDialog(true);
@@ -80,7 +81,7 @@ export default function DiscoverMovies() {
   const onSearch = (e) => {
     e.preventDefault();
     setSearch(true);
-    setMovies(searchResults);
+    setLists(searchResults);
   };
 
   const reset = () => {
@@ -108,15 +109,45 @@ export default function DiscoverMovies() {
           </button>
         </div>
       </form>
-      <button type="button" className="btn btn-secondary m-3" onClick={open}>
-        + Add Filters
-      </button>
-      <button type="button" className="btn btn-secondary m-3" onClick={reset}>
-        RESET
-      </button>
+      <div className="row g-3">
+        <button
+          type="button"
+          className="btn btn-secondary m-3 col-auto"
+          onClick={open}
+        >
+          + Add Filters
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary m-3 col-auto"
+          onClick={reset}
+        >
+          RESET
+        </button>
+        <div className="col-auto">
+          <select
+            className="form-select "
+            aria-label="Default select example"
+            value={select}
+            onChange={(e) => setSelect(e.target.value)}
+          >
+            <option disabled value="">
+              Select
+            </option>
+
+            <option value="movie">Movies</option>
+            <option value="tv">TV Shows</option>
+          </select>
+        </div>
+      </div>
 
       <Dialog aria-label="dialog" isOpen={showDialog} onDismiss={close}>
-        <Filters close={close} filters={filters} setFilters={setFilters} />
+        <Filters
+          close={close}
+          filters={filters}
+          setFilters={setFilters}
+          select={select}
+        />
       </Dialog>
 
       <Pagination
@@ -130,16 +161,16 @@ export default function DiscoverMovies() {
       />
 
       <div className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-        {movies.map((movie, i) => {
+        {lists.map((list, i) => {
           return (
             <div key={i} className="col">
               <button className="thumbnail">
                 <img
-                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                  src={`https://image.tmdb.org/t/p/w300${list.poster_path}`}
                   className="img-thumbnail"
                   alt="..."
                 />
-                <h5>{movie.title}</h5>
+                <h5>{select === 'movie' ? list.title : list.name}</h5>
               </button>
             </div>
           );

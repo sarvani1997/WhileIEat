@@ -4,7 +4,7 @@ import axios from 'axios';
 const BASE_URL = import.meta.env.VITE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-export default function Filters({ close, filters, setFilters, setPage }) {
+export default function Filters({ close, filters, setFilters, select }) {
   const [laguages, setLanguages] = useState([]);
   const [genres, setGenres] = useState([]);
   const [watchProviders, setWatchProviders] = useState([]);
@@ -16,7 +16,7 @@ export default function Filters({ close, filters, setFilters, setPage }) {
           `${BASE_URL}/configuration/languages?api_key=${API_KEY}`
         );
         const genres = await axios.get(
-          `${BASE_URL}/genre/movie/list?api_key=${API_KEY}`
+          `${BASE_URL}/genre/${select}/list?api_key=${API_KEY}`
         );
         const watchProviders = await axios.get(
           `${BASE_URL}/watch/providers/movie?api_key=${API_KEY}`
@@ -30,7 +30,7 @@ export default function Filters({ close, filters, setFilters, setPage }) {
     }
 
     get();
-  }, []);
+  }, [select]);
 
   return (
     <div>
