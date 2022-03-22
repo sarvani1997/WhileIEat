@@ -9,7 +9,7 @@ import Filters from './components/Filters';
 const BASE_URL = import.meta.env.VITE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-export default function DiscoverMovies() {
+export default function Discover() {
   const [select, setSelect] = useState('movie');
   const [lists, setLists] = useState([]);
   const [page, setPage] = useState(1);
@@ -89,6 +89,7 @@ export default function DiscoverMovies() {
     setPage(1);
     setSearch(false);
     setSearchPage(1);
+    setSearchValue('');
   };
 
   return (

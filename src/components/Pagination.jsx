@@ -38,7 +38,9 @@ export default function Pagination({
       <button onClick={onPrevPage} className="btn btn-outline-secondary btn-sm">
         <i className="bi bi-arrow-left"></i>
       </button>
-      <span>Page: {search === false ? page : searchPage}</span>
+      <span style={{ color: 'white' }}>
+        Page: {search === false ? page : searchPage}
+      </span>
       <button
         onClick={onNextPage}
         className="btn btn-outline-secondary btn-sm "
