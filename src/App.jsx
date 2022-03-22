@@ -10,7 +10,7 @@ const BASE_URL = import.meta.env.VITE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function DiscoverMovies() {
-  const [select, setSelect] = useState('tv');
+  const [select, setSelect] = useState('movie');
   const [lists, setLists] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState();
@@ -168,7 +168,6 @@ export default function DiscoverMovies() {
                 <img
                   src={`https://image.tmdb.org/t/p/w300${list.poster_path}`}
                   className="img-thumbnail"
-                  alt="..."
                 />
                 <h5>{select === 'movie' ? list.title : list.name}</h5>
               </button>

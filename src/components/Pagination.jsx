@@ -8,10 +8,8 @@ export default function Pagination({
   setPage,
 }) {
   const onNextPage = async () => {
-    console.log(searchPage, searchPages);
-    console.log(search);
     window.scrollTo(0, 0);
-    if (search == false) {
+    if (search === false) {
       if (page < pages) {
         setPage(page + 1);
       }
@@ -29,7 +27,7 @@ export default function Pagination({
         setPage(page - 1);
       }
     } else {
-      if (searchPage < 1) {
+      if (searchPage > 1) {
         setSearchPage(searchPage - 1);
       }
     }
