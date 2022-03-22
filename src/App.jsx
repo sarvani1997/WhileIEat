@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Dialog } from '@reach/dialog';
 import '@reach/dialog/styles.css';
 import './App.css';
+import Pagination from './components/Pagination';
 
 const BASE_URL = import.meta.env.VITE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -182,32 +183,6 @@ export default function DiscoverMovies() {
     get();
   }, [searchPage, searchValue]);
 
-  const onNextPage = async () => {
-    window.scrollTo(0, 0);
-    if (search == false) {
-      if (page < pages) {
-        setPage(page + 1);
-      }
-    } else {
-      if (searchPage < searchPages) {
-        setSearchPage(searchPage + 1);
-      }
-    }
-  };
-
-  const onPrevPage = async () => {
-    window.scrollTo(0, 0);
-    if (search === false) {
-      if (page > 1) {
-        setPage(page - 1);
-      }
-    } else {
-      if (searchPage < 1) {
-        setSearchPage(searchPage - 1);
-      }
-    }
-  };
-
   const onSearch = (e) => {
     e.preventDefault();
     setSearch(true);
@@ -250,22 +225,15 @@ export default function DiscoverMovies() {
         <Filters close={close} filters={filters} setFilters={setFilters} />
       </Dialog>
 
-      <div className="d-flex justify-content-between mb-5 mt-5">
-        <button
-          onClick={onPrevPage}
-          className="btn btn-outline-secondary btn-sm"
-        >
-          <i className="bi bi-arrow-left"></i>
-        </button>
-        <span>Page: {search === false ? page : searchPage}</span>
-        <button
-          onClick={onNextPage}
-          className="btn btn-outline-secondary btn-sm "
-          type="button"
-        >
-          <i className="bi bi-arrow-right"></i>
-        </button>
-      </div>
+      <Pagination
+        search={search}
+        pages={pages}
+        searchPages={searchPages}
+        searchPage={searchPage}
+        setSearchPage={setSearchPage}
+        page={page}
+        setPage={setPage}
+      />
 
       <div className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
         {movies.map((movie, i) => {
@@ -283,22 +251,15 @@ export default function DiscoverMovies() {
           );
         })}
       </div>
-      <div className="d-flex justify-content-between mb-5 mt-5">
-        <button
-          onClick={onPrevPage}
-          className="btn btn-outline-secondary btn-sm"
-        >
-          <i className="bi bi-arrow-left"></i>
-        </button>
-        <span>Page: {search === false ? page : searchPage}</span>
-        <button
-          onClick={onNextPage}
-          className="btn btn-outline-secondary btn-sm "
-          type="button"
-        >
-          <i className="bi bi-arrow-right"></i>
-        </button>
-      </div>
+      <Pagination
+        search={search}
+        pages={pages}
+        searchPages={searchPages}
+        searchPage={searchPage}
+        setSearchPage={setSearchPage}
+        page={page}
+        setPage={setPage}
+      />
     </div>
   );
 }
