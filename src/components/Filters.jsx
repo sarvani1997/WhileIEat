@@ -104,8 +104,8 @@ export default function Filters({ close, filters, setFilters, select }) {
       >
         Reset
       </button>
-      <button className="btn btn-danger m-2" onClick={close}>
-        Save/Close
+      <button className="btn btn-primary m-2" onClick={close}>
+        OK
       </button>
     </div>
   );
