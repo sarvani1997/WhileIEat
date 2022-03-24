@@ -51,11 +51,12 @@ export default function Movie() {
 
   return (
     <div
+      className="pb-5"
       style={{
         backgroundImage: `linear-gradient(rgba(31.5, 10.5, 10.5, 0.84), rgba(31.5, 10.5, 10.5, 0.84)),url(${`https://image.tmdb.org/t/p/w1920_and_h800_multi_faces${movie.backdrop_path}`})`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'right top',
-        height: '100vh',
+        minHeight: '100vh',
       }}
     >
       <div className="container pt-5">
