@@ -33,7 +33,7 @@ export default function Filters({ close, filters, setFilters, select }) {
   }, [select]);
 
   return (
-    <div>
+    <div style={{ color: 'black' }}>
       <div className="mb-3">
         <label htmlFor="exampleFormControlInput1" className="form-label">
           Language
