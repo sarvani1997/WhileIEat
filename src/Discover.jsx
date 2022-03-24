@@ -165,13 +165,20 @@ export default function Discover() {
         {lists.map((list, i) => {
           return (
             <div key={i} className="col">
-              <button className="thumbnail">
+              <a
+                className="thumbnail"
+                href={
+                  select === 'movie' ? `/movie/${list.id}` : `/tv/${list.id}`
+                }
+              >
                 <img
                   src={`https://image.tmdb.org/t/p/w300${list.poster_path}`}
                   className="img-thumbnail"
                 />
-                <h5>{select === 'movie' ? list.title : list.name}</h5>
-              </button>
+                <h5 className="color m-2">
+                  {select === 'movie' ? list.title : list.name}
+                </h5>
+              </a>
             </div>
           );
         })}

@@ -1,0 +1,12 @@
+.movie {
+  display: flex;
+  padding-top: 5vh;
+}
+
+.details {
+  padding-left: 30px;
+}
+
+.seasons {
+  padding-top: 20vh;
+}
