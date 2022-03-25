@@ -101,7 +101,7 @@ export default function Tv() {
 
           {tv.seasons.map((season) => {
             return (
-              <div className="movie mb-3">
+              <div key={season.id} className="movie mb-3">
                 <img
                   src={`https://image.tmdb.org/t/p/w185${season.poster_path}`}
                   className="img-thumbnail"

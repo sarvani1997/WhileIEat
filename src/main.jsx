@@ -61,7 +61,7 @@ const App = () => {
         <Route exact path="/tv/:id">
           <Tv />
         </Route>
-        <Route path="/tv/:id/season/:season_number">
+        <Route exact path="/tv/:id/season/:season_number">
           <TvSeason />
         </Route>
       </Switch>
