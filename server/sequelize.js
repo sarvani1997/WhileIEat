@@ -19,6 +19,8 @@ const User = sequelize.define('user', {
 
 const Watchlist = sequelize.define('watchlist', {
   showId: DataTypes.INTEGER,
+  showName: DataTypes.STRING,
+  imagePath: DataTypes.STRING,
   date: DataTypes.DATEONLY,
   type: DataTypes.STRING,
 });

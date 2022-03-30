@@ -108,7 +108,12 @@ export default function Movie() {
               Add to Calender
             </button>
             <Dialog aria-label="dialog" isOpen={showDialog} onDismiss={close}>
-              <UserDialog type="movie" id={id} />
+              <UserDialog
+                type="movie"
+                id={id}
+                showName={movie.title}
+                imagePath={movie.poster_path}
+              />
             </Dialog>
           </div>
         </div>

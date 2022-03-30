@@ -7,7 +7,14 @@ const sequelize = require('./sequelize');
 const watchlistRouter = express.Router();
 const { watchlist: Watchlist } = sequelize.models;
 
-const watchlistAllowedFields = ['userId', 'showId', 'date', 'type'];
+const watchlistAllowedFields = [
+  'userId',
+  'showId',
+  'date',
+  'type',
+  'showName',
+  'imagePath',
+];
 
 async function createWatchlist(_data) {
   const data = _.pick(_data, watchlistAllowedFields);

@@ -109,7 +109,12 @@ export default function Tv() {
               Add to Calender
             </button>
             <Dialog aria-label="dialog" isOpen={showDialog} onDismiss={close}>
-              <UserDialog type="tv" id={id} />
+              <UserDialog
+                type="tv"
+                id={id}
+                showName={tv.name}
+                imagePath={tv.poster_path}
+              />
             </Dialog>
           </div>
         </div>

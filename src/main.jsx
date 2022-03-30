@@ -20,7 +20,7 @@ const navTabs = [
   {
     tab: ExistingUsers,
     link: '/existingUsers',
-    name: 'Existing Users',
+    name: 'Users',
   },
   {
     tab: Signup,
