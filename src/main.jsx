@@ -7,6 +7,7 @@ import Discover from './Discover';
 import Movie from './Movie';
 import Tv from './Tv';
 import TvSeason from './TvSeason';
+import Signup from './Signup';
 
 const navTabs = [
   {
@@ -14,6 +15,17 @@ const navTabs = [
     link: '/discover',
     name: 'Movies/TV Shows',
   },
+  {
+    tab: Signup,
+    link: '/signup',
+    name: 'Signup',
+  },
+];
+
+const hiddenRoutes = [
+  { tab: Movie, link: '/movie/:id' },
+  { tab: Tv, link: '/tv/:id' },
+  { tab: TvSeason, link: '/tv/:id/season/:season_number' },
 ];
 
 const Navbar = () => {
@@ -50,20 +62,19 @@ const App = () => {
       <Switch>
         {navTabs.map((tab, i) => {
           return (
-            <Route key={i} path={tab.link}>
+            <Route exact key={i} path={tab.link}>
               <tab.tab />
             </Route>
           );
         })}
-        <Route path="/movie/:id">
-          <Movie />
-        </Route>
-        <Route exact path="/tv/:id">
-          <Tv />
-        </Route>
-        <Route exact path="/tv/:id/season/:season_number">
-          <TvSeason />
-        </Route>
+
+        {hiddenRoutes.map((tab, i) => {
+          return (
+            <Route exact key={i} path={tab.link}>
+              <tab.tab />
+            </Route>
+          );
+        })}
       </Switch>
     </StrictMode>
   );

@@ -10,7 +10,6 @@ export default function Movie() {
   const { id } = useParams();
   const [movie, setMovie] = useState({});
   const [providers, setProviders] = useState({});
-  console.log(id);
 
   useEffect(async () => {
     async function get() {
