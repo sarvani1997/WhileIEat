@@ -28,9 +28,11 @@ export default function ExistingUsers() {
       <ul className="list-group">
         {users.map((user) => {
           return (
-            <li className="list-group-item">
+            <li key={user.id} className="list-group-item">
               <h5>
-                <Link className="link">{user.name}</Link>
+                <Link to={`/user/${user.id}`} className="link">
+                  {user.name}
+                </Link>
               </h5>
               <p>Phone: {user.phonenumber}</p>
             </li>

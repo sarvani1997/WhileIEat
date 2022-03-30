@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './signup.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const SERVER_URL = import.meta.env.VITE_SERVER;
 
 export default function Signup() {
   const [name, setName] = useState('');
   const [phonenumber, setPhonenumber] = useState('');
+  let history = useHistory();
 
   const createUser = async () => {
     const res = await axios.post(`${SERVER_URL}/users`, {
       name,
       phonenumber,
     });
+    history.push('/existingUsers');
   };
 
   const onSubmit = (e) => {

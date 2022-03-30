@@ -9,22 +9,23 @@ import Tv from './Tv';
 import TvSeason from './TvSeason';
 import Signup from './Signup';
 import ExistingUsers from './ExistingUsers';
+import Users from './Users';
 
 const navTabs = [
   {
     tab: Discover,
-    link: '/discover',
+    link: '/',
     name: 'Movies/TV Shows',
-  },
-  {
-    tab: Signup,
-    link: '/signup',
-    name: 'Signup',
   },
   {
     tab: ExistingUsers,
     link: '/existingUsers',
     name: 'Existing Users',
+  },
+  {
+    tab: Signup,
+    link: '/signup',
+    name: 'Sign Up',
   },
 ];
 
@@ -32,6 +33,7 @@ const hiddenRoutes = [
   { tab: Movie, link: '/movie/:id' },
   { tab: Tv, link: '/tv/:id' },
   { tab: TvSeason, link: '/tv/:id/season/:season_number' },
+  { tab: Users, link: '/user/:userId' },
 ];
 
 const Navbar = () => {
