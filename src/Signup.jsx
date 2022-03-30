@@ -24,7 +24,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="container card">
+    <div className="container mt-5">
       <div className="header">
         <h2>Sign Up</h2>
         <Link to={`/existingUsers`} className="btn btn-primary mb-3">

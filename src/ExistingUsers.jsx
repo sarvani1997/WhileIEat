@@ -18,7 +18,7 @@ export default function ExistingUsers() {
   }, []);
 
   return (
-    <div className="container card">
+    <div className="container mt-3">
       <div className="header">
         <h2>Users List</h2>
         <Link role="button" className="btn btn-primary mb-3" to={`/signup`}>
