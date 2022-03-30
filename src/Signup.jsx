@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './signup.css';
+import { Link } from 'react-router-dom';
 
 const SERVER_URL = import.meta.env.VITE_SERVER;
 
@@ -24,7 +25,12 @@ export default function Signup() {
 
   return (
     <div className="container card">
-      <h2>Sign Up</h2>
+      <div className="header">
+        <h2>Sign Up</h2>
+        <Link to={`/existingUsers`} className="btn btn-primary mb-3">
+          Existing Users
+        </Link>
+      </div>
       <form onSubmit={onSubmit}>
         <div className="mb-3">
           <label for="name" className="form-label">

@@ -8,6 +8,7 @@ import Movie from './Movie';
 import Tv from './Tv';
 import TvSeason from './TvSeason';
 import Signup from './Signup';
+import ExistingUsers from './ExistingUsers';
 
 const navTabs = [
   {
@@ -19,6 +20,11 @@ const navTabs = [
     tab: Signup,
     link: '/signup',
     name: 'Signup',
+  },
+  {
+    tab: ExistingUsers,
+    link: '/existingUsers',
+    name: 'Existing Users',
   },
 ];
 
