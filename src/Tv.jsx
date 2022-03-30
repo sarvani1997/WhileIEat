@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import UserDialog from './components/UserDialog';
+import { Dialog } from '@reach/dialog';
+import '@reach/dialog/styles.css';
 import './Movie.css';
 
 const BASE_URL = import.meta.env.VITE_URL;
@@ -10,7 +13,7 @@ export default function Tv() {
   const { id } = useParams();
   const [tv, setTv] = useState({});
   const [providers, setProviders] = useState({});
-  console.log(id);
+  const [showDialog, setShowDialog] = useState(false);
 
   useEffect(async () => {
     async function get() {
@@ -33,6 +36,11 @@ export default function Tv() {
 
     get();
   }, []);
+
+  const open = () => {
+    setShowDialog(true);
+  };
+  const close = () => setShowDialog(false);
 
   if (tv.genres === undefined) {
     return null;
@@ -94,6 +102,15 @@ export default function Tv() {
                 })
               )}
             </div>
+            <button type="button" className="btn btn-danger m-2" onClick={open}>
+              Add to Watchlist
+            </button>
+            <button type="button" className="btn btn-danger m-2">
+              Add to Calender
+            </button>
+            <Dialog aria-label="dialog" isOpen={showDialog} onDismiss={close}>
+              <UserDialog type="tv" id={id} />
+            </Dialog>
           </div>
         </div>
         <div className="seasons">

@@ -7,15 +7,16 @@ const sequelize = require('./sequelize');
 const watchlistRouter = express.Router();
 const { watchlist: Watchlist } = sequelize.models;
 
-const watchlistAllowedFields = ['userId', 'movieId', 'date'];
+const watchlistAllowedFields = ['userId', 'showId', 'date', 'type'];
 
 async function createWatchlist(_data) {
   const data = _.pick(_data, watchlistAllowedFields);
   const existingWatchlist = await getWatchlist(data.userId);
+
   const existingMovies = existingWatchlist.map((watchlist) => {
-    return watchlist.movieId;
+    return watchlist.showId;
   });
-  const exist = existingMovies.some((movieId) => movieId === data.movieId);
+  const exist = existingMovies.some((showId) => showId === Number(data.showId));
   if (!exist) {
     const watchlist = await Watchlist.create(data);
     return watchlist.toJSON();

@@ -18,7 +18,7 @@ const User = sequelize.define('user', {
 });
 
 const Watchlist = sequelize.define('watchlist', {
-  movieId: DataTypes.INTEGER,
+  showId: DataTypes.INTEGER,
   date: DataTypes.DATEONLY,
   type: DataTypes.STRING,
 });

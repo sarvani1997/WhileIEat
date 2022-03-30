@@ -19,10 +19,8 @@ export default function Signup() {
   };
 
   const onSubmit = (e) => {
-    console.log('submit');
     e.preventDefault();
     createUser();
-    console.log('submitted');
   };
 
   return (
