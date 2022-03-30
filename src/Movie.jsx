@@ -37,10 +37,10 @@ export default function Movie() {
     get();
   }, []);
 
-  const open = () => {
+  const onOpen = () => {
     setShowDialog(true);
   };
-  const close = () => setShowDialog(false);
+  const onClose = () => setShowDialog(false);
 
   if (movie.genres === undefined) {
     return null;
@@ -101,18 +101,23 @@ export default function Movie() {
                 })
               )}
             </div>
-            <button type="button" className="btn btn-danger m-2" onClick={open}>
+            <button
+              type="button"
+              className="btn btn-danger m-2"
+              onClick={onOpen}
+            >
               Add to Watchlist
             </button>
             <button type="button" className="btn btn-danger m-2">
               Add to Calender
             </button>
-            <Dialog aria-label="dialog" isOpen={showDialog} onDismiss={close}>
+            <Dialog aria-label="dialog" isOpen={showDialog} onDismiss={onClose}>
               <UserDialog
                 type="movie"
                 id={id}
                 showName={movie.title}
                 imagePath={movie.poster_path}
+                onClose={onClose}
               />
             </Dialog>
           </div>

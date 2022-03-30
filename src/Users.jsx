@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Watchlist from './Watchlist';
+import UserSettings from './UserSettings';
 
 const SERVER_URL = import.meta.env.VITE_SERVER;
 
@@ -48,15 +49,16 @@ export default function Users() {
               <button
                 type="button"
                 className="btn btn-danger m-1"
-                onClick={() => setTab('EditProfile')}
+                onClick={() => setTab('Settings')}
               >
-                Edit Profile
+                Settings
               </button>
             </li>
           </ul>
         </div>
       </nav>
       {tab === 'Watchlist' && <Watchlist user={user} />}
+      {tab === 'Settings' && <UserSettings user={user} />}
     </div>
   );
 }

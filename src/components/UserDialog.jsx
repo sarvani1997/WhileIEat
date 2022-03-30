@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const SERVER_URL = import.meta.env.VITE_SERVER;
 
-export default function UserDialog({ type, id, showName, imagePath }) {
+export default function UserDialog({ type, id, showName, imagePath, onClose }) {
   const [users, setUsers] = useState([]);
   const [userId, setUserId] = useState('1');
 
@@ -28,6 +28,7 @@ export default function UserDialog({ type, id, showName, imagePath }) {
   const onSubmit = (e) => {
     e.preventDefault();
     createWatchlist();
+    onClose();
   };
   return (
     <form style={{ color: 'black' }} onSubmit={onSubmit}>
