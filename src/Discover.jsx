@@ -161,7 +161,7 @@ export default function Discover() {
         setPage={setPage}
       />
 
-      <div className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
+      <div className="row row-cols-2 row-cols-lg-5">
         {lists.map((list, i) => {
           return (
             <div key={i} className="col">
