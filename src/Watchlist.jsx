@@ -54,7 +54,15 @@ export default function Watchlist({ user }) {
                   />
                   <div style={{ paddingLeft: '15px' }}>
                     <h5>{movie.showName}</h5>
-                    <a className="btn btn-dark" href={`/movie/${movie.showId}`}>
+                    <p>
+                      {movie.date === null
+                        ? 'Not yet scheduled'
+                        : `Date: ${movie.date}`}
+                    </p>
+                    <a
+                      className="btn btn-dark btn-sm"
+                      href={`/movie/${movie.showId}`}
+                    >
                       View More
                     </a>
                   </div>
@@ -73,7 +81,15 @@ export default function Watchlist({ user }) {
                   />
                   <div style={{ paddingLeft: '15px' }}>
                     <h5>{movie.showName}</h5>
-                    <a className="btn btn-dark" href={`/tv/${movie.showId}`}>
+                    <p>
+                      {movie.date === null
+                        ? 'Not yet scheduled'
+                        : `Date: ${movie.date}`}
+                    </p>
+                    <a
+                      className="btn btn-dark btn-sm"
+                      href={`/tv/${movie.showId}`}
+                    >
                       View More
                     </a>
                   </div>
