@@ -43,25 +43,43 @@ async function getWatchlist(userId) {
   return watchlist;
 }
 
-async function updateWatchlist(id, _data) {
+async function updateWatchlist(showId, _data) {
   const data = _.pick(_data, watchlistAllowedFields);
   const existingWatchlist = await getWatchlist(data.userId);
-  const existing = existingWatchlist.filter((list) => list.date === data.date);
+  const existing = existingWatchlist.filter(
+    (list) => list.date === data.date.slice(0, 10)
+  );
   if (existing[0] !== undefined) {
     await Watchlist.update(
       { date: null },
       {
         where: {
-          id: existing[0].id,
+          userId: data.userId,
+          date: data.date.slice(0, 10),
         },
       }
     );
   }
-  await Watchlist.update(data, {
+  const isInWatchlist = await Watchlist.findAll({
     where: {
-      id,
+      showId,
+      userId: data.userId,
     },
   });
+
+  if (isInWatchlist[0] === undefined) {
+    await Watchlist.create(data);
+  } else {
+    await Watchlist.update(
+      { date: data.date },
+      {
+        where: {
+          showId,
+          userId: data.userId,
+        },
+      }
+    );
+  }
 }
 
 async function deleteWatchlist(id) {
@@ -85,9 +103,9 @@ watchlistRouter.post('/', async (req, res, next) => {
   }
 });
 
-watchlistRouter.put('/:id', async (req, res, next) => {
+watchlistRouter.put('/:showId', async (req, res, next) => {
   try {
-    const update = await updateUser(req.params.id, req.body);
+    const update = await updateWatchlist(req.params.showId, req.body);
     res.status(StatusCodes.NO_CONTENT).end();
   } catch (err) {
     next(err);
