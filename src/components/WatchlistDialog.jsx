@@ -3,14 +3,21 @@ import axios from 'axios';
 
 const SERVER_URL = import.meta.env.VITE_SERVER;
 
-export default function UserDialog({ type, id, showName, imagePath, onClose }) {
+export default function UserDialog({
+  type,
+  id,
+  showName,
+  imagePath,
+  onCloseWatchlist,
+}) {
   const [users, setUsers] = useState([]);
-  const [userId, setUserId] = useState('1');
+  const [userId, setUserId] = useState('');
 
   useEffect(async () => {
     async function get() {
       const res = await axios.get(`${SERVER_URL}/users`);
       setUsers(res.data);
+      setUserId(res.data[0].id);
     }
     get();
   }, []);
@@ -28,8 +35,9 @@ export default function UserDialog({ type, id, showName, imagePath, onClose }) {
   const onSubmit = (e) => {
     e.preventDefault();
     createWatchlist();
-    onClose();
+    onCloseWatchlist();
   };
+
   return (
     <form style={{ color: 'black' }} onSubmit={onSubmit}>
       <div className="mb-3">

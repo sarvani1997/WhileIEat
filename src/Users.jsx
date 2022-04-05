@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Watchlist from './Watchlist';
 import UserSettings from './UserSettings';
+import Calender from './Calender';
 
 const SERVER_URL = import.meta.env.VITE_SERVER;
 
@@ -59,6 +60,7 @@ export default function Users() {
       </nav>
       {tab === 'Watchlist' && <Watchlist user={user} />}
       {tab === 'Settings' && <UserSettings user={user} />}
+      {tab === 'Calender' && <Calender user={user} />}
     </div>
   );
 }

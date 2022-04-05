@@ -1,0 +1,71 @@
+.body {
+  color: black;
+  display: flex;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.calender {
+}
+
+.week_days {
+  display: flex;
+  text-align: center;
+  font-weight: bold;
+}
+
+.weekDay {
+  width: 50px;
+  margin: 2px;
+  padding: 10px;
+}
+
+.day {
+  display: flex;
+  text-align: center;
+}
+
+.dateButton {
+  width: 50px;
+  padding: 10px;
+  margin: 2px;
+  border: none;
+  font-size: 1.25em;
+  color: white;
+  border-radius: 8px;
+}
+
+.available {
+  background-color: green;
+  width: 20px;
+  height: 20px;
+}
+
+.booked {
+  background-color: red;
+  width: 20px;
+  height: 20px;
+}
+
+.selected {
+  background-color: blue;
+  width: 20px;
+  height: 20px;
+}
+
+.calender-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.green-color {
+  background-color: green;
+}
+
+.blue-color {
+  background-color: blue;
+}
+
+.red-color {
+  background-color: red;
+}
