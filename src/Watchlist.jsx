@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { DateTime } from 'luxon';
 
 const BASE_URL = import.meta.env.VITE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -17,7 +18,41 @@ export default function Watchlist({ user }) {
     async function get() {
       const res = await axios.get(`${SERVER_URL}/watchlist/user/${userId}`);
       setWatchlist(res.data);
-      const movies = res.data.filter((show) => show.type === 'movie');
+      let list = res.data.sort((a, b) => {
+        if (a.date !== null && b.date !== null) {
+          if (
+            DateTime.fromFormat(a.date, 'yyyy-MM-dd') >
+            DateTime.fromFormat(b.date, 'yyyy-MM-dd')
+          ) {
+            return -1;
+          } else {
+            return 1;
+          }
+        } else if (a.date === null && b.date !== null) {
+          return 1;
+        } else {
+          console.log(a.date, b.date);
+          return -1;
+        }
+      });
+      let movies = res.data.filter((show) => show.type === 'movie');
+      movies = movies.sort((a, b) => {
+        if (a.date !== null && b.date !== null) {
+          if (
+            DateTime.fromFormat(a.date, 'yyyy-MM-dd') >
+            DateTime.fromFormat(b.date, 'yyyy-MM-dd')
+          ) {
+            return -1;
+          } else {
+            return 1;
+          }
+        } else if (a.date === null && b.date !== null) {
+          return 1;
+        } else {
+          console.log(a.date, b.date);
+          return -1;
+        }
+      });
       setMovies(movies);
       const tv_shows = res.data.filter((show) => show.type === 'tv');
       setTv(tv_shows);
