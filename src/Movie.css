@@ -2,7 +2,7 @@
   padding-top: 20vh;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 900px) {
   .movie {
     display: flex;
     padding-top: 5vh;
@@ -13,7 +13,7 @@
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
   .movie {
     padding-top: 5vh;
   }
@@ -21,5 +21,17 @@
   .details {
     padding-top: 30px;
     padding-left: 20px;
+  }
+}
+
+@media only screen and (max-width: 1900px) {
+  .background {
+    background-position: right top;
+  }
+}
+
+@media only screen and (min-width: 1900px) {
+  .background {
+    background-position: center top;
   }
 }

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import UserDialog from './components/UserDialog';
+import WatchlistDialog from './components/WatchlistDialog';
+import CalenderDialog from './components/CalenderDialog';
 import { Dialog } from '@reach/dialog';
 import '@reach/dialog/styles.css';
 import './Movie.css';
@@ -13,7 +14,8 @@ export default function Tv() {
   const { id } = useParams();
   const [tv, setTv] = useState({});
   const [providers, setProviders] = useState({});
-  const [showDialog, setShowDialog] = useState(false);
+  const [showWatchlistDialog, setShowWatchlistDialog] = useState(false);
+  const [showCalenderDialog, setCalenderDialog] = useState(false);
 
   useEffect(async () => {
     async function get() {
@@ -37,10 +39,14 @@ export default function Tv() {
     get();
   }, []);
 
-  const onOpen = () => {
-    setShowDialog(true);
+  const onOpenWatchlist = () => {
+    setShowWatchlistDialog(true);
   };
-  const onClose = () => setShowDialog(false);
+  const onCloseWatchlist = () => setShowWatchlistDialog(false);
+  const onOpenCalender = () => {
+    setCalenderDialog(true);
+  };
+  const onCloseCalender = () => setCalenderDialog(false);
 
   if (tv.genres === undefined) {
     return null;
@@ -59,11 +65,10 @@ export default function Tv() {
 
   return (
     <div
-      className="pb-5"
+      className="pb-5 background"
       style={{
         backgroundImage: `linear-gradient(rgba(31.5, 10.5, 10.5, 0.84), rgba(31.5, 10.5, 10.5, 0.84)),url(${`https://image.tmdb.org/t/p/w1920_and_h800_multi_faces${tv.backdrop_path}`})`,
         backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'right top',
         minHeight: '100vh',
       }}
     >
@@ -105,20 +110,41 @@ export default function Tv() {
             <button
               type="button"
               className="btn btn-danger m-2"
-              onClick={onOpen}
+              onClick={onOpenWatchlist}
             >
               Add to Watchlist
             </button>
-            <button type="button" className="btn btn-danger m-2">
+            <button
+              type="button"
+              className="btn btn-danger m-2"
+              onClick={onOpenCalender}
+            >
               Add to Calender
             </button>
-            <Dialog aria-label="dialog" isOpen={showDialog} onDismiss={onClose}>
-              <UserDialog
+            <Dialog
+              aria-label="dialog"
+              isOpen={showWatchlistDialog}
+              onDismiss={onCloseWatchlist}
+            >
+              <WatchlistDialog
                 type="tv"
                 id={id}
                 showName={tv.name}
                 imagePath={tv.poster_path}
-                onClose={onClose}
+                onCloseWatchlist={onCloseWatchlist}
+              />
+            </Dialog>
+            <Dialog
+              aria-label="dialog"
+              isOpen={showCalenderDialog}
+              onDismiss={onCloseCalender}
+            >
+              <CalenderDialog
+                type="tv"
+                id={id}
+                showName={tv.name}
+                imagePath={tv.poster_path}
+                onCloseCalender={onCloseCalender}
               />
             </Dialog>
           </div>
