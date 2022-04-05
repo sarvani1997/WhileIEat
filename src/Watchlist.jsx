@@ -25,6 +25,18 @@ export default function Watchlist({ user }) {
     get();
   }, []);
 
+  const onDelete = async (watchlistId) => {
+    const res = await axios.delete(`${SERVER_URL}/watchlist/${watchlistId}`);
+    if (res.status === 204) {
+      const res = await axios.get(`${SERVER_URL}/watchlist/user/${userId}`);
+      setWatchlist(res.data);
+      const movies = res.data.filter((show) => show.type === 'movie');
+      setMovies(movies);
+      const tv_shows = res.data.filter((show) => show.type === 'tv');
+      setTv(tv_shows);
+    }
+  };
+
   return (
     <div className="container">
       <div>
@@ -65,6 +77,14 @@ export default function Watchlist({ user }) {
                     >
                       View More
                     </a>
+                    <button
+                      type="button"
+                      className="btn btn-danger btn-sm"
+                      style={{ marginLeft: '5px' }}
+                      onClick={() => onDelete(movie.id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               </li>
