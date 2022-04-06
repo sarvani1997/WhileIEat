@@ -66,15 +66,15 @@ export default function Calender({ watchlist, onDelete }) {
                             <h5>{show.showName}</h5>
 
                             <a
-                              className="btn btn-dark btn-sm"
+                              className="btn btn-dark btn-sm mb-1"
                               href={`/movie/${show.showId}`}
+                              style={{ marginRight: '5px' }}
                             >
-                              View More
+                              More
                             </a>
                             <button
                               type="button"
                               className="btn btn-danger btn-sm"
-                              style={{ marginLeft: '5px' }}
                               onClick={() => onDelete(show.id)}
                             >
                               Delete
